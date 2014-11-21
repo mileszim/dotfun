@@ -16,16 +16,15 @@ var Dotfun = function(name, options) {
 	if (!(this instanceof Dotfun)) return new Dotfun(name, options);
 	
 	// Sanitize name
-	this.name = Dotfun._sanitize(name);
+	var name = Dotfun._sanitize(name);
+	this.name = name;
 	
-	// Home dir
-	if (!options || options.home) {
-		this.path = path.join(Dotfun._home(), Dotfun._sanitize(name));
-	} else
-	
-	// Local/working directory
-	if (options.local || options.working) {
-		this.path = path.join(process.cwd(), Dotfun._sanitize(name));
+	// Set path to home if requested
+	// Otherwise, set to local program dir
+	if (options && options.home) {
+		this.path = path.join(Dotfun._home(), name);
+	} else {
+		this.path = path.join(path.dirname(require.main.filename), name);
 	}
 	
 	// Load config
@@ -73,7 +72,7 @@ Dotfun._home = function() {
 	  || '/tmp';
 	}
 	return root;
-}
+};
 
 
 /** 
