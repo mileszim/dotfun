@@ -1,0 +1,28 @@
+{
+  "name": "dotfun",
+  "version": "0.0.0",
+  "description": "Simple dotfile implementation for node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mileszim/dotfun.git"
+  },
+  "keywords": [
+    "dotfile",
+    "env",
+    "dotenv",
+    "config",
+    "setting",
+    "setup",
+    "json"
+  ],
+  "author": "Miles Zimmerman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mileszim/dotfun/issues"
+  },
+  "homepage": "https://github.com/mileszim/dotfun"
+}
