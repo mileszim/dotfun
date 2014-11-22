@@ -14,9 +14,9 @@ var util = require('util');
  */
 var Dotfun = function(name, options) {
 	if (!(this instanceof Dotfun)) return new Dotfun(name, options);
-	
+
 	// Sanitize name
-	var name = Dotfun._sanitize(name);
+	var name  = Dotfun._sanitize(name);
 	this.name = name;
 	
 	// Set path to home if requested
@@ -27,10 +27,8 @@ var Dotfun = function(name, options) {
 		this.path = path.join(path.dirname(require.main.filename), name);
 	}
 	
-	// Load config
-	process.nextTick(function() {
-		this.config = Dotfun._load(this.path);
-	}.bind(this));
+	// Init
+	this.config = Dotfun._load(this.path);
 };
 
 
@@ -40,16 +38,28 @@ Dotfun.prototype = {
 	/**
 	 * Get config
 	 */
-	get: function() {
-
+	get: function(key) {
+		if (key) return this.config[key];
+		return this.config;
 	},
 	
 	
 	/**
 	 * Set config
 	 */
-	set: function(config) {
-		fs.writeFileSync(this.path, JSON.stringify(config, null, 2) + '\n');
+	set: function(key, val) {
+		this.config[key] = val;
+		this._write();
+	},
+	
+	
+	/**
+	 * Write
+	 */
+	_write: function() {
+		process.nextTick(function() {
+			fs.writeFileSync(this.path, JSON.stringify(this.config, null, 2) + '\n');
+		}.bind(this));
 	}
 	
 };
